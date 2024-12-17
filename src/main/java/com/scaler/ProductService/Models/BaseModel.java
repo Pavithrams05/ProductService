@@ -3,11 +3,35 @@ package com.scaler.ProductService.Models;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 public class BaseModel {
 
-    private long id;
-    private long createdAt;
-    private long lastUpdateAt;
+    private Long id;
+    private Long createdAt;
+    private Long lastUpdateAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    //    public long getId() {
+//        return id;
+//    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getLastUpdateAt() {
+        return lastUpdateAt;
+    }
+    public void setLastUpdateAt(Long lastUpdateAt) {
+        this.lastUpdateAt = lastUpdateAt;
+    }
 }
