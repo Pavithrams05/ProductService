@@ -7,6 +7,7 @@ import com.scaler.ProductService.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +19,6 @@ public class FakeStoreProductService implements ProductService{
     }
     @Override
     public Product getSingleProduct(Long productId) {
-        RestTemplate restTemplate = new RestTemplate();
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/"+productId, FakeStoreProductDto.class);
         return convertFakestoreProductDtoToProduct(fakeStoreProductDto);
@@ -26,7 +26,26 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+
+        //used type erasure property i.e in the response body the generic type of return to object is used
+        //List<FakeStoreProductDto>.class will provide an error so used List.class error while returning
+
+//        List<FakeStoreProductDto> fakeStoreProductDtos = restTemplate.getForObject(
+//                "https://fakestoreapi.com/products", List.class);
+
+        //using a simple hack as Arrays instead of List bz need a class of particular list not just a generic List.class
+
+        FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject(
+                "https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+
+        List<Product> products = new ArrayList<>();
+
+        for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos) {
+            System.out.println("print================="+fakeStoreProductDto);
+            products.add(convertFakestoreProductDtoToProduct(fakeStoreProductDto));
+        }
+
+        return products;
     }
 
     @Override

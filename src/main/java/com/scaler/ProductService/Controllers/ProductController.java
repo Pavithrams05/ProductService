@@ -27,7 +27,8 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getAllProducts(){
-        return new ArrayList<>();
+
+        return productService.getAllProducts();
     }
 
     @PostMapping
