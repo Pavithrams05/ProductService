@@ -1,7 +1,11 @@
 package com.scaler.ProductService.Controllers;
 
+import com.scaler.ProductService.Dtos.ProductNotFoundExceptionDto;
+import com.scaler.ProductService.Exceptions.ProductNotFoundException;
 import com.scaler.ProductService.Models.Product;
 import com.scaler.ProductService.Services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,15 +22,28 @@ public class ProductController {
         this.productService = productService;
     }
 
+    //adding Response entity/API o a methods
     @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable("id") Long id){
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
 
-        return productService.getSingleProduct(id);
+//        try{
+//            return new ResponseEntity<>(
+//                    productService.getSingleProduct(id),
+//                    HttpStatus.OK);
+//        }catch (RuntimeException e){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+
+        return new ResponseEntity<>(
+                productService.getSingleProduct(id),
+                HttpStatus.OK);
+
 
     }
 
     @GetMapping
     public List<Product> getAllProducts(){
+
 
         return productService.getAllProducts();
     }
@@ -50,5 +67,16 @@ public class ProductController {
     @PutMapping("{id}")
     public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
         return new Product();
+    }
+
+    //handle the exceptions locally instead of global exception handler
+    //message from the service can be directly written to the dto
+    @ExceptionHandler(ProductNotFoundException.class)
+    private ResponseEntity<ProductNotFoundExceptionDto> handleProductNotFoundException(ProductNotFoundException exception) {
+        ProductNotFoundExceptionDto dto = new ProductNotFoundExceptionDto();
+        dto.setMessage(exception.getMessage());
+        dto.setResolution("try with a valid id");
+        return new ResponseEntity<>(dto,
+                HttpStatus.NOT_FOUND);
     }
 }
