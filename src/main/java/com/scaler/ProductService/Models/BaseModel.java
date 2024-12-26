@@ -1,12 +1,19 @@
 package com.scaler.ProductService.Models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Getter
-//@Setter
+@Getter
+@Setter
+@MappedSuperclass
 public class BaseModel {
 
+    @Id //primarykey of the table
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement the primarykey value
     private Long id;
     private Long createdAt;
     private Long lastUpdateAt;
@@ -15,9 +22,6 @@ public class BaseModel {
         return id;
     }
 
-    //    public long getId() {
-//        return id;
-//    }
     public void setId(Long id) {
         this.id = id;
     }
