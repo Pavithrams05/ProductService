@@ -1,7 +1,12 @@
 package com.scaler.ProductService.InheritanceDemo.TablePerClass;
 
+import jakarta.persistence.*;
+
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = "tpc_user")
 public class User {
 
+    @Id
     private Long id;
     private String name;
     private String password;

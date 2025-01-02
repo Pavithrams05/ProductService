@@ -1,5 +1,8 @@
 package com.scaler.ProductService.InheritanceDemo.TablePerClass;
 
+import jakarta.persistence.Entity;
+
+@Entity(name = "tpc_instructor")
 public class Instructor extends User {
     private String specialization;
     private double avgRating;

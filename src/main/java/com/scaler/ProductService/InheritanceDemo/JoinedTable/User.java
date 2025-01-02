@@ -1,7 +1,13 @@
 package com.scaler.ProductService.InheritanceDemo.JoinedTable;
 
+import jakarta.persistence.*;
+
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity(name = "jt_user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String password;
@@ -32,5 +38,12 @@ public class User {
         this.email = email;
     }
 
+    /*
+    required for joined table
+    @Inheritance(strategy = InheritanceType.JOINED)
+    @Entity(name = "jt_user")
+    @PrimaryKeyJoinColumn(name = "user_id") //gives two columns of id one is from user
+    and other as user_id as mentioned in annotation
 
+     */
 }

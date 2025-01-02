@@ -1,7 +1,17 @@
 package com.scaler.ProductService.InheritanceDemo.SingleTable;
 
+import jakarta.persistence.*;
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity(name = "st_user")
+@DiscriminatorColumn(
+        name = "userType",
+        discriminatorType = DiscriminatorType.INTEGER
+)
+@DiscriminatorValue(value = "0")
 public class User {
 
+    @Id
     private Long id;
     private String name;
     private String password;

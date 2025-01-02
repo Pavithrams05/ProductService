@@ -1,5 +1,8 @@
 package com.scaler.ProductService.InheritanceDemo.TablePerClass;
 
+import jakarta.persistence.Entity;
+
+@Entity(name = "tpc_mentor")
 public class Mentor extends User {
     private String company;
 
