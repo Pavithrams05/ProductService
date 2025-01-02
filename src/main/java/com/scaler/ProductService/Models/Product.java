@@ -1,9 +1,6 @@
 package com.scaler.ProductService.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +9,7 @@ import lombok.Setter;
 @Entity(name = "products")
 public class Product extends BaseModel{
 
+//    @Column(unique = true, nullable = false)
     private String title;
     private Double price;
     @ManyToOne // cardinality b/w products and category

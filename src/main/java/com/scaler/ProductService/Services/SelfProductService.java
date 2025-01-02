@@ -1,7 +1,9 @@
 package com.scaler.ProductService.Services;
 
 import com.scaler.ProductService.Exceptions.ProductNotFoundException;
+import com.scaler.ProductService.Models.Category;
 import com.scaler.ProductService.Models.Product;
+import com.scaler.ProductService.Repositories.CategoryRepository;
 import com.scaler.ProductService.Repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class SelfProductService implements ProductService{
 
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
-    public SelfProductService(ProductRepository productRepository) {
+    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
@@ -31,12 +35,29 @@ public class SelfProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
+
     }
 
     @Override
     public Product createProduct(Product product) {
-        return null;
+        if(product.getCategory() != null){
+            if(product.getCategory().getId() == null){
+                //create a category first
+                Category category = product.getCategory();
+                Optional<Category> categoryfromDB = categoryRepository.findByValue(category.getValue());
+                if (categoryfromDB.isEmpty()){
+                    category = categoryRepository.save(category);
+                    product.setCategory(category);
+                }else{
+                    product.setCategory(categoryfromDB.get());
+                }
+
+            }
+        }else{
+            throw new RuntimeException("category cannot be null while creating product");
+        }
+        return productRepository.save(product);
     }
 
     @Override
