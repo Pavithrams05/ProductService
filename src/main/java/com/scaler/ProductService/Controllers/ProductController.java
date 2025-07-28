@@ -25,7 +25,8 @@ public class ProductController {
 
     //adding Response entity/API o a methods
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+//    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+      public Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
 
 //        try{
 //            return new ResponseEntity<>(
@@ -35,9 +36,11 @@ public class ProductController {
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //        }
 
-        return new ResponseEntity<>(
-                productService.getSingleProduct(id),
-                HttpStatus.OK);
+//        return new ResponseEntity<>(
+//                productService.getSingleProduct(id),
+//                HttpStatus.OK);              //commented to check and run test for the class
+
+        return  productService.getSingleProduct(id);
 
 
     }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("selfProductService") //defining the name of the bean while creating
-//@Primary //annotation that injects to create an object of the class when there are more than 1 bean.
+@Primary //annotation that injects to create an object of the class when there are more than 1 bean.
 // i.e when 2 classes implement the same interface it shows which class object as to be created.
 
 public class SelfProductService implements ProductService{
