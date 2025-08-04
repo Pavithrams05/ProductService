@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +50,34 @@ class ProductControllerTest {
 
     @Test
     void getAllProducts() {
+        Product p1 = new Product();
+        p1.setTitle("iphone 15");
+        p1.setPrice(100000.0);
+
+        Product p2 = new Product();
+        p2.setTitle("iphone 16");
+        p2.setPrice(80000.0);
+
+        Product p3 = new Product();
+        p3.setTitle("iphone 16 pro");
+        p3.setPrice(150000.0);
+
+        List<Product> expectedProducts = new ArrayList<>();
+        expectedProducts.add(p1);
+        expectedProducts.add(p2);
+        expectedProducts.add(p3);
+
+        when(productService.getAllProducts()).thenReturn(expectedProducts);
+        List<Product> actualProducts = productController.getAllProducts();
+
+        assertEquals(expectedProducts.size(), actualProducts.size());
+
+        for (int i=0; i<expectedProducts.size(); i++){
+            assertEquals(expectedProducts.get(i),actualProducts.get(i));
+        }
+
+
+
     }
 
     @Test
@@ -64,4 +95,6 @@ class ProductControllerTest {
     @Test
     void replaceProduct() {
     }
+
+    //mockmvc for further reading
 }
